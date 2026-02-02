@@ -7,7 +7,7 @@ Files included:
 - `package.json` — minimal xsnx asm dmetadata and scripts
 - `.gitignore` — common ignores
 git checkout -b add-dummy-project
-mkdir -p dummy-project
+mkdir -p dummy-projectenfklre
 # create files (or copy them from this message)
 cd dummy-project
 npm install   # optional, no dependencies
