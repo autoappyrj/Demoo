@@ -6,10 +6,6 @@ Files included:
 - `index.js` — simple entrypoint and exported helper
 - `package.json` — minimal metadata and scripts
 - `.gitignore` — common ignores
-
-Quick start:
-```bash
-# from repo root
 git checkout -b add-dummy-project
 mkdir -p dummy-project
 # create files (or copy them from this message)
