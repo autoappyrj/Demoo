@@ -1,0 +1,12 @@
+{
+  "name": "demoo-dummy-project",
+  "version": "0.1.0",
+  "description": "Dummy project added to autoappyrj/Demoo",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node -e \"console.log('No tests');\""
+  },
+  "author": "autoappyrj",
+  "license": "MIT"
+}

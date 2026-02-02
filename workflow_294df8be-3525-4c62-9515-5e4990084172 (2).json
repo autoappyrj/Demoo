@@ -1,0 +1,508 @@
+{
+  "workflow": {
+    "name": "New_Patient_Registration[post appointment]",
+    "status": "Live"
+  },
+  "tasks": [
+    {
+      "temp_id": "temp_task_1",
+      "parent_temp_id": null,
+      "task_template_id": "e0e8b8b5-44d8-46f2-a94b-b3d68729b394",
+      "action_template_id": "f0f8041a-d83e-41a6-a996-0a4504ccd33a",
+      "task_type": "google-sheets",
+      "action_type": "new_row_added_or_updated",
+      "incoming_data": {
+        "incoming_data": "NA"
+      },
+      "outgoing_data": {
+        "spreadsheetId": "1t9DgAFPvVvPsJJ6KLVOnDpgqmkzuUyUdb58tJKFbLoA",
+        "sheetId": 0,
+        "sheetName": "patient_entry",
+        "row": 12,
+        "columnHeader": "medical_followup_required",
+        "columnIndex": 18,
+        "newValue": "Yes",
+        "oldValue": null,
+        "rowData": {
+          "Timestamp": "2026-01-28T06:40:33.000Z",
+          "Patient_Name": "Arjun Bam",
+          "Age": 32,
+          "Gender": "Male",
+          "Phone": 9307935334,
+          "Email": "arjunbam@autoappy.com",
+          "Appointment_Date": "2026-02-04T18:30:00.000Z",
+          "Start_Time": "1899-12-30T09:38:50.000Z",
+          "End_Time": "1899-12-30T10:08:50.000Z",
+          "Visit_Type": "Sugar Test",
+          "Primary_Condition": "Hypertension",
+          "Condition_Type": "Chronic",
+          "Appointment_Status": "Scheduled",
+          "Check_In_Status": "Not Arrived",
+          "Doctor_Name": "Dr. Rao",
+          "Assigned_Staff": "Staff C",
+          "Check_Out_Time": null,
+          "Medical_Followup_Required": "Yes",
+          "Followup_Date": "2026-02-05T18:30:00.000Z",
+          "Followup_Type": "Routine",
+          "Test_Required": "No",
+          "Test_Type": "None",
+          "Medication_Adherence": "Moderate",
+          "Severity_Level": "Medium",
+          "Additional_Notes": "Regular senior care"
+        },
+        "eventType": "text"
+      },
+      "config_data_tag": "NA",
+      "next_tasks": [
+        {
+          "sequence": 2,
+          "conditions": [],
+          "task_type": "Zoho Invoice",
+          "action_type": "createAProject",
+          "next_task_id": "temp_task_2"
+        },
+        {
+          "sequence": 3,
+          "conditions": [
+            {
+              "field": "workflow.rowData.Medical_Followup_Required",
+              "operator": "text_exact_match",
+              "value": "No"
+            }
+          ],
+          "task_type": "Zoho Invoice",
+          "action_type": "createAnInvoice",
+          "next_task_id": "temp_task_7"
+        }
+      ],
+      "status": "Live"
+    },
+    {
+      "temp_id": "temp_task_2",
+      "parent_temp_id": "temp_task_1",
+      "task_template_id": "6047ca64-0360-4f25-b74d-941a2ee65546",
+      "action_template_id": "20755189-d7cf-4330-a5dc-56e7ba1d8e94",
+      "task_type": "Zoho Invoice",
+      "action_type": "createAProject",
+      "incoming_data": null,
+      "outgoing_data": null,
+      "config_data_tag": "Zoho Invoice #1",
+      "next_tasks": [
+        {
+          "sequence": 0,
+          "conditions": [],
+          "task_type": "Zoho Invoice",
+          "action_type": "createEstimateQuote",
+          "next_task_id": "temp_task_3"
+        }
+      ],
+      "status": "Draft"
+    },
+    {
+      "temp_id": "temp_task_3",
+      "parent_temp_id": "temp_task_2",
+      "task_template_id": "6047ca64-0360-4f25-b74d-941a2ee65546",
+      "action_template_id": "568f960f-f22e-4630-9ceb-510d5869dbf9",
+      "task_type": "Zoho Invoice",
+      "action_type": "createEstimateQuote",
+      "incoming_data": null,
+      "outgoing_data": null,
+      "config_data_tag": "Zoho Invoice #1",
+      "next_tasks": [
+        {
+          "conditions": [
+            {
+              "field": "workflow.rowData.Medical_Followup_Required",
+              "operator": "text_exact_match",
+              "value": "Yes"
+            }
+          ],
+          "task_type": "autoAppyTools",
+          "action_type": "uuidgenerator",
+          "next_task_id": "temp_task_4"
+        }
+      ],
+      "status": "Draft"
+    },
+    {
+      "temp_id": "temp_task_4",
+      "parent_temp_id": "temp_task_3",
+      "task_template_id": "5ed83033-0787-43ba-a215-5ebc603d6c81",
+      "action_template_id": "8586251b-b8ab-4ddc-876a-58204a40d502",
+      "task_type": "autoAppyTools",
+      "action_type": "uuidgenerator",
+      "incoming_data": null,
+      "outgoing_data": {
+        "uuids": [
+          "bc4a514b-96d9-4c30-a176-58990498f35a"
+        ]
+      },
+      "config_data_tag": "NA",
+      "next_tasks": [
+        {
+          "sequence": 1,
+          "conditions": [],
+          "task_type": "gmail",
+          "action_type": "createDraft",
+          "next_task_id": "temp_task_5"
+        }
+      ],
+      "status": "Live"
+    },
+    {
+      "temp_id": "temp_task_5",
+      "parent_temp_id": "temp_task_4",
+      "task_template_id": "e8517a65-2e92-4c8a-b6fc-03496d953833",
+      "action_template_id": "c9c0e976-905e-44d0-9ac6-b459e1064878",
+      "task_type": "gmail",
+      "action_type": "createDraft",
+      "incoming_data": {
+        "senderEmail": "arjunbam@autoappy.com",
+        "senderName": "[Hospital Name]",
+        "to": "workflow.rowData.Email",
+        "subject": "Your Appointment Has Been Successfully Scheduled",
+        "body": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\" />\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n<title>Appointment Confirmation</title>\n</head>\n\n<body style=\"font-family: Arial, sans-serif; background-color: #f5f7fa; padding: 20px; margin: 0;\">\n\n  <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"max-width: 600px; margin: auto; background: #ffffff; border-radius: 10px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);\">\n\n    <tr>\n      <td style=\"text-align: center; padding-bottom: 20px;\">\n        <h2 style=\"color: #2c3e50; margin-bottom: 5px;\">Appointment Confirmed</h2>\n        <p style=\"color: #7f8c8d; margin: 0;\">Thank you for choosing XYZ Healthcare</p>\n      </td>\n    </tr>\n\n    <tr>\n      <td style=\"padding: 15px; background: #f0f4f8; border-radius: 8px; margin-bottom: 20px;\">\n        <h3 style=\"color: #34495e; margin-top: 0;\">Hello workflow.rowData.Patient_Name,</h3>\n        <p style=\"color: #555; line-height: 1.6;\">\n          Your appointment has been scheduled successfully. Below are the details of your visit:\n        </p>\n\n        <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"margin-top: 10px;\">\n          <tr>\n            <td style=\"padding: 5px 0; color: #333;\"><strong>📅 Date:</strong></td>\n            <td style=\"padding: 5px 0; color: #555;\">workflow.rowData.Appointment_Date</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 5px 0; color: #333;\"><strong>⏰ Time:</strong></td>\n            <td style=\"padding: 5px 0; color: #555;\">workflow.rowData.Start_Time – workflow.rowData.End_Time</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 5px 0; color: #333;\"><strong>🩺 Purpose:</strong></td>\n            <td style=\"padding: 5px 0; color: #555;\">workflow.rowData.Purpose</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 5px 0; color: #333;\"><strong>📍 Clinic:</strong></td>\n            <td style=\"padding: 5px 0; color: #555;\">XYZ Health Care Center</td>\n          </tr>\n        </table>\n\n      </td>\n    </tr>\n\n    <tr>\n      <td>\n        <p style=\"color: #555; line-height: 1.6;\">\n          Please try to arrive at least <strong>10 minutes early</strong> for a smooth check-in.  \n          If you need to reschedule, simply reply to this email.\n        </p>\n\n        <p style=\"background: #fef8e7; padding: 12px; border-left: 4px solid #f1c40f; color: #7d6608; border-radius: 5px;\">\n          <strong>Clinic Notes:</strong> workflow.rowData.Notes\n        </p>\n\n        <p style=\"color: #95a5a6; margin-top: 30px; font-size: 13px; text-align: center;\">\n          © 2026 XYZ Healthcare. All rights reserved.\n        </p>\n      </td>\n    </tr>\n\n  </table>\n\n</body>\n</html>",
+        "cc": null,
+        "bcc": null,
+        "replyTo": null,
+        "fileNames": null,
+        "attachmentUrls": null,
+        "signature": null
+      },
+      "outgoing_data": {
+        "id": "r-6133325193890568913",
+        "message": {
+          "id": "19bfefe68fed32c3",
+          "threadId": "19bfefe68fed32c3",
+          "labelIds": [
+            "DRAFT"
+          ]
+        }
+      },
+      "config_data_tag": "Gmail #1",
+      "next_tasks": [
+        {
+          "conditions": [],
+          "task_type": "google-sheets",
+          "action_type": "insert-row",
+          "next_task_id": "temp_task_6"
+        }
+      ],
+      "status": "Live",
+      "task_extended": {
+        "saved_form": {
+          "values": {
+            "senderEmail": "arjunbam@autoappy.com",
+            "senderName": "[Hospital Name]",
+            "to": "workflow.rowData.Email",
+            "subject": "Your Appointment Has Been Successfully Scheduled",
+            "body": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\" />\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n<title>Appointment Confirmation</title>\n</head>\n\n<body style=\"font-family: Arial, sans-serif; background-color: #f5f7fa; padding: 20px; margin: 0;\">\n\n  <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"max-width: 600px; margin: auto; background: #ffffff; border-radius: 10px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);\">\n\n    <tr>\n      <td style=\"text-align: center; padding-bottom: 20px;\">\n        <h2 style=\"color: #2c3e50; margin-bottom: 5px;\">Appointment Confirmed</h2>\n        <p style=\"color: #7f8c8d; margin: 0;\">Thank you for choosing XYZ Healthcare</p>\n      </td>\n    </tr>\n\n    <tr>\n      <td style=\"padding: 15px; background: #f0f4f8; border-radius: 8px; margin-bottom: 20px;\">\n        <h3 style=\"color: #34495e; margin-top: 0;\">Hello workflow.rowData.Patient_Name,</h3>\n        <p style=\"color: #555; line-height: 1.6;\">\n          Your appointment has been scheduled successfully. Below are the details of your visit:\n        </p>\n\n        <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"margin-top: 10px;\">\n          <tr>\n            <td style=\"padding: 5px 0; color: #333;\"><strong>📅 Date:</strong></td>\n            <td style=\"padding: 5px 0; color: #555;\">workflow.rowData.Appointment_Date</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 5px 0; color: #333;\"><strong>⏰ Time:</strong></td>\n            <td style=\"padding: 5px 0; color: #555;\">workflow.rowData.Start_Time – workflow.rowData.End_Time</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 5px 0; color: #333;\"><strong>🩺 Purpose:</strong></td>\n            <td style=\"padding: 5px 0; color: #555;\">workflow.rowData.Purpose</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 5px 0; color: #333;\"><strong>📍 Clinic:</strong></td>\n            <td style=\"padding: 5px 0; color: #555;\">XYZ Health Care Center</td>\n          </tr>\n        </table>\n\n      </td>\n    </tr>\n\n    <tr>\n      <td>\n        <p style=\"color: #555; line-height: 1.6;\">\n          Please try to arrive at least <strong>10 minutes early</strong> for a smooth check-in.  \n          If you need to reschedule, simply reply to this email.\n        </p>\n\n        <p style=\"background: #fef8e7; padding: 12px; border-left: 4px solid #f1c40f; color: #7d6608; border-radius: 5px;\">\n          <strong>Clinic Notes:</strong> workflow.rowData.Notes\n        </p>\n\n        <p style=\"color: #95a5a6; margin-top: 30px; font-size: 13px; text-align: center;\">\n          © 2026 XYZ Healthcare. All rights reserved.\n        </p>\n      </td>\n    </tr>\n\n  </table>\n\n</body>\n</html>",
+            "cc": null,
+            "bcc": null,
+            "replyTo": null,
+            "fileNames": null,
+            "attachmentUrls": null,
+            "signature": null
+          },
+          "dynamicFields": []
+        },
+        "last_outgoing_data_error": null,
+        "simple_response": 1
+      }
+    },
+    {
+      "temp_id": "temp_task_6",
+      "parent_temp_id": "temp_task_5",
+      "task_template_id": "e0e8b8b5-44d8-46f2-a94b-b3d68729b394",
+      "action_template_id": "0775d091-2846-4cb5-87b9-1039193a0a5b",
+      "task_type": "google-sheets",
+      "action_type": "insert-row",
+      "incoming_data": {
+        "spreadsheetId": "1t9DgAFPvVvPsJJ6KLVOnDpgqmkzuUyUdb58tJKFbLoA",
+        "sheetName": "Patients",
+        "values": [
+          "",
+          "workflow.rowData.Patient_Name",
+          "",
+          "",
+          "workflow.rowData.Phone",
+          "",
+          "",
+          "",
+          "Active",
+          "tasks.task-0ad6076e-00b7-4e3d-8696-86b54093ff4e.formatted_date",
+          "workflow.rowData.Notes"
+        ]
+      },
+      "outgoing_data": {
+        "insertion_status": "Row inserted successfully"
+      },
+      "config_data_tag": "Google Sheets #2",
+      "next_tasks": [],
+      "status": "Live",
+      "task_extended": {
+        "saved_form": {
+          "values": {
+            "spreadsheetId": "1t9DgAFPvVvPsJJ6KLVOnDpgqmkzuUyUdb58tJKFbLoA",
+            "sheetName": "Patients",
+            "values": null,
+            "col#1": null,
+            "col#2": "workflow.rowData.Patient_Name",
+            "col#3": null,
+            "col#4": null,
+            "col#5": "workflow.rowData.Phone",
+            "col#6": null,
+            "col#7": null,
+            "col#8": null,
+            "col#9": "Active",
+            "col#10": "tasks.task-0ad6076e-00b7-4e3d-8696-86b54093ff4e.formatted_date",
+            "col#11": "workflow.rowData.Notes"
+          },
+          "dynamicFields": [
+            {
+              "name": "col#1",
+              "display_name": "Patient ID",
+              "depends_on": "values",
+              "parent": "values"
+            },
+            {
+              "name": "col#2",
+              "display_name": "Name",
+              "depends_on": "values",
+              "parent": "values"
+            },
+            {
+              "name": "col#3",
+              "display_name": "Age",
+              "depends_on": "values",
+              "parent": "values"
+            },
+            {
+              "name": "col#4",
+              "display_name": "Gender",
+              "depends_on": "values",
+              "parent": "values"
+            },
+            {
+              "name": "col#5",
+              "display_name": "Phone",
+              "depends_on": "values",
+              "parent": "values"
+            },
+            {
+              "name": "col#6",
+              "display_name": "Condition",
+              "depends_on": "values",
+              "parent": "values"
+            },
+            {
+              "name": "col#7",
+              "display_name": "BP Time",
+              "depends_on": "values",
+              "parent": "values"
+            },
+            {
+              "name": "col#8",
+              "display_name": "Sugar Time",
+              "depends_on": "values",
+              "parent": "values"
+            },
+            {
+              "name": "col#9",
+              "display_name": "Enrollment Status",
+              "depends_on": "values",
+              "parent": "values"
+            },
+            {
+              "name": "col#10",
+              "display_name": "Last Reminder Sent",
+              "depends_on": "values",
+              "parent": "values"
+            },
+            {
+              "name": "col#11",
+              "display_name": "Notes",
+              "depends_on": "values",
+              "parent": "values"
+            }
+          ]
+        },
+        "last_outgoing_data_error": null,
+        "simple_response": 1
+      }
+    },
+    {
+      "temp_id": "temp_task_7",
+      "parent_temp_id": "temp_task_1",
+      "task_template_id": "6047ca64-0360-4f25-b74d-941a2ee65546",
+      "action_template_id": "4d482923-56f4-4e71-a94f-db7ab9919d92",
+      "task_type": "Zoho Invoice",
+      "action_type": "createAnInvoice",
+      "incoming_data": {
+        "X-com-zoho-invoice-organizationid": "60064537936",
+        "customer_id": "3477664000000032404",
+        "date": "workflow.rowData.Timestamp",
+        "contact_persons": null,
+        "invoice_number": null,
+        "reference_number": null,
+        "place_of_supply": null,
+        "gst_treatment": null
+      },
+      "outgoing_data": null,
+      "config_data_tag": "Zoho Invoice #1",
+      "next_tasks": [
+        {
+          "conditions": [],
+          "task_type": "gmail",
+          "action_type": "sendEmail",
+          "next_task_id": "temp_task_8"
+        }
+      ],
+      "status": "Draft",
+      "task_extended": {
+        "saved_form": {
+          "values": {
+            "X-com-zoho-invoice-organizationid": "60064537936",
+            "customer_id": "3477664000000032404",
+            "date": "workflow.rowData.Timestamp",
+            "contact_persons": null,
+            "invoice_number": null,
+            "reference_number": null,
+            "place_of_supply": null,
+            "gst_treatment": null
+          },
+          "dynamicFields": []
+        },
+        "last_outgoing_data_error": {
+          "status": "error",
+          "message": "Missing required fields: item_id, rate, quantity"
+        },
+        "simple_response": 1
+      }
+    },
+    {
+      "temp_id": "temp_task_8",
+      "parent_temp_id": "temp_task_7",
+      "task_template_id": "e8517a65-2e92-4c8a-b6fc-03496d953833",
+      "action_template_id": "ca422fa8-dc2d-4312-bba1-f01ed9d252ee",
+      "task_type": "gmail",
+      "action_type": "sendEmail",
+      "incoming_data": {
+        "toemail": "workflow.rowData.Email",
+        "fromemail": "workflow.rowData.Email",
+        "subject": "workflow.rowData.Visit_Type",
+        "ccemail": null,
+        "bccemail": null,
+        "replyTo": null,
+        "htmlContent": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\" />\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n<title>We Value Your Feedback</title>\n</head>\n\n<body style=\"font-family: Arial, sans-serif; background-color: #f5f7fa; padding: 20px; margin: 0;\">\n\n  <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" \n         style=\"max-width: 600px; margin: auto; background: #ffffff; \n                border-radius: 10px; padding: 20px; \n                box-shadow: 0 4px 12px rgba(0,0,0,0.1);\">\n\n    <!-- HEADER -->\n    <tr>\n      <td style=\"text-align: center; padding-bottom: 20px;\">\n        <h2 style=\"color: #2c3e50; margin-bottom: 5px;\">How Was Your Experience?</h2>\n        <p style=\"color: #7f8c8d; margin: 0;\">We hope you're recovering well</p>\n      </td>\n    </tr>\n\n    <!-- MESSAGE BOX -->\n    <tr>\n      <td style=\"padding: 15px; background: #f0f4f8; border-radius: 8px; margin-bottom: 20px;\">\n        <h3 style=\"color: #34495e; margin-top: 0;\">\n          Hello workflow.rowData.Patient_Name,\n        </h3>\n\n        <p style=\"color: #555; line-height: 1.6;\">\n          We truly hope that your recovery after your recent \n          <strong>workflow.rowData.Primary_Condition</strong> medication is going smoothly.\n          Your health and comfort matter to us, and we are always here to support you.\n        </p>\n\n        <p style=\"color: #555; line-height: 1.6;\">\n          To help us continue improving our care, we would love to hear about your experience with our clinic.\n          Your feedback helps us serve you better.\n        </p>\n\n        <!-- INVOICE MENTION (NEWLY ADDED SECTION) -->\n        <p style=\"color: #555; line-height: 1.6;\">\n          Additionally, the invoice for your recent appointment — including consultation fees, service charges, \n          and any applicable tests — will be sent to you shortly. \n          Please review it at your convenience, and feel free to reach out if you have any questions regarding billing.\n        </p>\n\n        <!-- CTA BUTTON -->\n        <div style=\"text-align: center; margin: 20px 0;\">\n          <a href=\"{{RowData.Feedback_Link}}\" \n             style=\"background: #2c3e50; color: #ffffff; text-decoration: none; \n                    padding: 12px 22px; border-radius: 6px; \n                    font-weight: bold; display: inline-block;\">\n            Submit Feedback\n          </a>\n        </div>\n\n      </td>\n    </tr>\n\n    <!-- RECOVERY NOTE -->\n    <tr>\n      <td>\n        <p style=\"background: #eafaf1; padding: 12px; border-left: 4px solid #2ecc71; \n                  color: #145a32; border-radius: 5px; line-height: 1.6;\">\n          💙 <strong>Wishing you a quick and healthy recovery.</strong><br>\n          If you experience any discomfort or need assistance, please reach out to us anytime.\n        </p>\n\n        <p style=\"color: #555; line-height: 1.6; margin-top: 20px;\">\n          Thank you for choosing <strong>XYZ Healthcare</strong>.  \n          We are here for you at every step of your healing journey.\n        </p>\n\n        <p style=\"color: #95a5a6; margin-top: 30px; font-size: 13px; text-align: center;\">\n          © 2026 XYZ Healthcare. All rights reserved.\n        </p>\n      </td>\n    </tr>\n\n  </table>\n\n</body>\n</html>",
+        "filename": null,
+        "fileUrl": null
+      },
+      "outgoing_data": {
+        "id": "19c03874f74d479c",
+        "threadId": "19c03874f74d479c",
+        "labelIds": [
+          "UNREAD",
+          "SENT",
+          "INBOX"
+        ]
+      },
+      "config_data_tag": "Gmail #1",
+      "next_tasks": [
+        {
+          "sequence": 1,
+          "conditions": [],
+          "task_type": "Zoho Invoice",
+          "action_type": "emailInvoice",
+          "next_task_id": "temp_task_9"
+        }
+      ],
+      "status": "Live",
+      "task_extended": {
+        "saved_form": {
+          "values": {
+            "toemail": "workflow.rowData.Email",
+            "fromemail": "workflow.rowData.Email",
+            "subject": "workflow.rowData.Visit_Type",
+            "ccemail": null,
+            "bccemail": null,
+            "replyTo": null,
+            "htmlContent": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\" />\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n<title>We Value Your Feedback</title>\n</head>\n\n<body style=\"font-family: Arial, sans-serif; background-color: #f5f7fa; padding: 20px; margin: 0;\">\n\n  <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" \n         style=\"max-width: 600px; margin: auto; background: #ffffff; \n                border-radius: 10px; padding: 20px; \n                box-shadow: 0 4px 12px rgba(0,0,0,0.1);\">\n\n    <!-- HEADER -->\n    <tr>\n      <td style=\"text-align: center; padding-bottom: 20px;\">\n        <h2 style=\"color: #2c3e50; margin-bottom: 5px;\">How Was Your Experience?</h2>\n        <p style=\"color: #7f8c8d; margin: 0;\">We hope you're recovering well</p>\n      </td>\n    </tr>\n\n    <!-- MESSAGE BOX -->\n    <tr>\n      <td style=\"padding: 15px; background: #f0f4f8; border-radius: 8px; margin-bottom: 20px;\">\n        <h3 style=\"color: #34495e; margin-top: 0;\">\n          Hello workflow.rowData.Patient_Name,\n        </h3>\n\n        <p style=\"color: #555; line-height: 1.6;\">\n          We truly hope that your recovery after your recent \n          <strong>workflow.rowData.Primary_Condition</strong> medication is going smoothly.\n          Your health and comfort matter to us, and we are always here to support you.\n        </p>\n\n        <p style=\"color: #555; line-height: 1.6;\">\n          To help us continue improving our care, we would love to hear about your experience with our clinic.\n          Your feedback helps us serve you better.\n        </p>\n\n        <!-- INVOICE MENTION (NEWLY ADDED SECTION) -->\n        <p style=\"color: #555; line-height: 1.6;\">\n          Additionally, the invoice for your recent appointment — including consultation fees, service charges, \n          and any applicable tests — will be sent to you shortly. \n          Please review it at your convenience, and feel free to reach out if you have any questions regarding billing.\n        </p>\n\n        <!-- CTA BUTTON -->\n        <div style=\"text-align: center; margin: 20px 0;\">\n          <a href=\"{{RowData.Feedback_Link}}\" \n             style=\"background: #2c3e50; color: #ffffff; text-decoration: none; \n                    padding: 12px 22px; border-radius: 6px; \n                    font-weight: bold; display: inline-block;\">\n            Submit Feedback\n          </a>\n        </div>\n\n      </td>\n    </tr>\n\n    <!-- RECOVERY NOTE -->\n    <tr>\n      <td>\n        <p style=\"background: #eafaf1; padding: 12px; border-left: 4px solid #2ecc71; \n                  color: #145a32; border-radius: 5px; line-height: 1.6;\">\n          💙 <strong>Wishing you a quick and healthy recovery.</strong><br>\n          If you experience any discomfort or need assistance, please reach out to us anytime.\n        </p>\n\n        <p style=\"color: #555; line-height: 1.6; margin-top: 20px;\">\n          Thank you for choosing <strong>XYZ Healthcare</strong>.  \n          We are here for you at every step of your healing journey.\n        </p>\n\n        <p style=\"color: #95a5a6; margin-top: 30px; font-size: 13px; text-align: center;\">\n          © 2026 XYZ Healthcare. All rights reserved.\n        </p>\n      </td>\n    </tr>\n\n  </table>\n\n</body>\n</html>",
+            "filename": null,
+            "fileUrl": null
+          },
+          "dynamicFields": []
+        },
+        "last_outgoing_data_error": null,
+        "simple_response": 1
+      }
+    },
+    {
+      "temp_id": "temp_task_9",
+      "parent_temp_id": "temp_task_8",
+      "task_template_id": "6047ca64-0360-4f25-b74d-941a2ee65546",
+      "action_template_id": "d6d1cce8-0996-4954-8988-ba57732a39cf",
+      "task_type": "Zoho Invoice",
+      "action_type": "emailInvoice",
+      "incoming_data": null,
+      "outgoing_data": null,
+      "config_data_tag": "Zoho Invoice #1",
+      "next_tasks": [],
+      "status": "Draft"
+    },
+    {
+      "temp_id": "temp_task_11",
+      "parent_temp_id": "temp_task_10",
+      "task_template_id": "e8517a65-2e92-4c8a-b6fc-03496d953833",
+      "action_template_id": "c9c0e976-905e-44d0-9ac6-b459e1064878",
+      "task_type": "gmail",
+      "action_type": "createDraft",
+      "incoming_data": {
+        "senderEmail": "arjunbam@autoappy.com",
+        "senderName": "Arjun Bam",
+        "to": "arjunbam@gmail.com",
+        "subject": "Thanks for choosing [Clinic Name, Patient Name]",
+        "body": "<!DOCTYPE html>\n<html>\n<head>\n<title>Clinic Feedback Request</title>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n\n<style>\n  body {\n    background-color: #e8f1f8;\n    margin: 0;\n    padding: 0;\n    font-family: Arial, sans-serif;\n  }\n\n  .wrapper {\n    width: 100%;\n    padding: 20px 0;\n  }\n\n  .container {\n    max-width: 600px;\n    margin: auto;\n    background: #ffffff;\n    border-radius: 10px;\n    padding: 25px;\n    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);\n    border-top: 6px solid #2a7bdc;\n  }\n\n  .header {\n    text-align: center;\n    padding-bottom: 20px;\n  }\n\n  .header img {\n    width: 70px;\n    margin-bottom: 10px;\n  }\n\n  .header h2 {\n    margin: 0;\n    color: #2a7bdc;\n    font-size: 24px;\n  }\n\n  .subtext {\n    color: #666;\n    font-size: 14px;\n    margin-top: 5px;\n  }\n\n  .message {\n    font-size: 15px;\n    color: #444;\n    line-height: 1.7;\n    margin: 18px 0;\n  }\n\n  .highlight-box {\n    background: #f0f8ff;\n    border-left: 4px solid #2a7bdc;\n    padding: 12px 15px;\n    border-radius: 6px;\n    margin: 20px 0;\n    color: #333;\n  }\n\n  .button-center {\n    text-align: center;\n    margin: 25px 0;\n  }\n\n  .btn {\n    background: #2a7bdc;\n    color: #fff !important;\n    padding: 14px 24px;\n    text-decoration: none;\n    border-radius: 6px;\n    font-weight: bold;\n    display: inline-block;\n    font-size: 15px;\n  }\n\n  .footer {\n    text-align: center;\n    margin-top: 30px;\n    font-size: 12px;\n    color: #888;\n  }\n\n  .footer a {\n    color: #2a7bdc;\n    text-decoration: none;\n  }\n</style>\n</head>\n\n<body>\n\n<div class=\"wrapper\">\n  <div class=\"container\">\n\n    <!-- HEADER -->\n    <div class=\"header\">\n      <img src=\"https://cdn-icons-png.flaticon.com/512/2966/2966486.png\" alt=\"Healthcare Icon\">\n      <h2>Your Recovery Matters to Us</h2>\n      <p class=\"subtext\">Thank you for trusting our clinic with your care</p>\n    </div>\n\n    <!-- MESSAGE -->\n    <p class=\"message\">\n      Dear <strong>{{patient_name}}</strong>,\n    </p>\n\n    <p class=\"message\">\n      We hope you are recovering comfortably after your recent \n      <strong>{{service_name}}</strong>. Your health and well-being are our top priority, \n      and we want to ensure you're receiving the best possible care even after your visit.\n    </p>\n\n    <!-- HEALTH MESSAGE BOX -->\n    <div class=\"highlight-box\">\n      💙 <strong>Wishing you a smooth and speedy recovery.</strong><br>\n      If you experience discomfort or have questions, please do not hesitate to reach out.\n    </div>\n\n    <p class=\"message\">\n      To help us continue improving our services, we kindly request your feedback.\n      Sharing your experience helps us serve you better and support more patients like you.\n    </p>\n\n    <!-- CTA BUTTON -->\n    <div class=\"button-center\">\n      <a href=\"{{feedback_link}}\" class=\"btn\">Submit Your Feedback</a>\n    </div>\n\n    <p class=\"message\">\n      Thank you once again for choosing <strong>{{clinic_name}}</strong>.  \n      We are always here for you whenever you need us.\n    </p>\n\n    <p class=\"message\">\n      Warm regards,<br>\n      <strong>{{clinic_name}} Team</strong>\n    </p>\n\n    <!-- FOOTER -->\n    <div class=\"footer\">\n      © {{year}} {{clinic_name}} • All Rights Reserved<br>\n      <a href=\"{{unsubscribe_link}}\">Unsubscribe</a>\n    </div>\n\n  </div>\n</div>\n\n</body>\n</html>",
+        "cc": null,
+        "bcc": null,
+        "replyTo": null,
+        "fileNames": null,
+        "attachmentUrls": null,
+        "signature": null
+      },
+      "outgoing_data": {
+        "id": "r-6965579762072435958",
+        "message": {
+          "id": "19c037a0a013073b",
+          "threadId": "19c037a0a013073b",
+          "labelIds": [
+            "DRAFT"
+          ]
+        }
+      },
+      "config_data_tag": "Gmail #1",
+      "next_tasks": [],
+      "status": "Live",
+      "task_extended": {
+        "saved_form": {
+          "values": {
+            "senderEmail": "arjunbam@autoappy.com",
+            "senderName": "Arjun Bam",
+            "to": "arjunbam@gmail.com",
+            "subject": "Thanks for choosing [Clinic Name, Patient Name]",
+            "body": "<!DOCTYPE html>\n<html>\n<head>\n<title>Clinic Feedback Request</title>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n\n<style>\n  body {\n    background-color: #e8f1f8;\n    margin: 0;\n    padding: 0;\n    font-family: Arial, sans-serif;\n  }\n\n  .wrapper {\n    width: 100%;\n    padding: 20px 0;\n  }\n\n  .container {\n    max-width: 600px;\n    margin: auto;\n    background: #ffffff;\n    border-radius: 10px;\n    padding: 25px;\n    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);\n    border-top: 6px solid #2a7bdc;\n  }\n\n  .header {\n    text-align: center;\n    padding-bottom: 20px;\n  }\n\n  .header img {\n    width: 70px;\n    margin-bottom: 10px;\n  }\n\n  .header h2 {\n    margin: 0;\n    color: #2a7bdc;\n    font-size: 24px;\n  }\n\n  .subtext {\n    color: #666;\n    font-size: 14px;\n    margin-top: 5px;\n  }\n\n  .message {\n    font-size: 15px;\n    color: #444;\n    line-height: 1.7;\n    margin: 18px 0;\n  }\n\n  .highlight-box {\n    background: #f0f8ff;\n    border-left: 4px solid #2a7bdc;\n    padding: 12px 15px;\n    border-radius: 6px;\n    margin: 20px 0;\n    color: #333;\n  }\n\n  .button-center {\n    text-align: center;\n    margin: 25px 0;\n  }\n\n  .btn {\n    background: #2a7bdc;\n    color: #fff !important;\n    padding: 14px 24px;\n    text-decoration: none;\n    border-radius: 6px;\n    font-weight: bold;\n    display: inline-block;\n    font-size: 15px;\n  }\n\n  .footer {\n    text-align: center;\n    margin-top: 30px;\n    font-size: 12px;\n    color: #888;\n  }\n\n  .footer a {\n    color: #2a7bdc;\n    text-decoration: none;\n  }\n</style>\n</head>\n\n<body>\n\n<div class=\"wrapper\">\n  <div class=\"container\">\n\n    <!-- HEADER -->\n    <div class=\"header\">\n      <img src=\"https://cdn-icons-png.flaticon.com/512/2966/2966486.png\" alt=\"Healthcare Icon\">\n      <h2>Your Recovery Matters to Us</h2>\n      <p class=\"subtext\">Thank you for trusting our clinic with your care</p>\n    </div>\n\n    <!-- MESSAGE -->\n    <p class=\"message\">\n      Dear <strong>{{patient_name}}</strong>,\n    </p>\n\n    <p class=\"message\">\n      We hope you are recovering comfortably after your recent \n      <strong>{{service_name}}</strong>. Your health and well-being are our top priority, \n      and we want to ensure you're receiving the best possible care even after your visit.\n    </p>\n\n    <!-- HEALTH MESSAGE BOX -->\n    <div class=\"highlight-box\">\n      💙 <strong>Wishing you a smooth and speedy recovery.</strong><br>\n      If you experience discomfort or have questions, please do not hesitate to reach out.\n    </div>\n\n    <p class=\"message\">\n      To help us continue improving our services, we kindly request your feedback.\n      Sharing your experience helps us serve you better and support more patients like you.\n    </p>\n\n    <!-- CTA BUTTON -->\n    <div class=\"button-center\">\n      <a href=\"{{feedback_link}}\" class=\"btn\">Submit Your Feedback</a>\n    </div>\n\n    <p class=\"message\">\n      Thank you once again for choosing <strong>{{clinic_name}}</strong>.  \n      We are always here for you whenever you need us.\n    </p>\n\n    <p class=\"message\">\n      Warm regards,<br>\n      <strong>{{clinic_name}} Team</strong>\n    </p>\n\n    <!-- FOOTER -->\n    <div class=\"footer\">\n      © {{year}} {{clinic_name}} • All Rights Reserved<br>\n      <a href=\"{{unsubscribe_link}}\">Unsubscribe</a>\n    </div>\n\n  </div>\n</div>\n\n</body>\n</html>",
+            "cc": null,
+            "bcc": null,
+            "replyTo": null,
+            "fileNames": null,
+            "attachmentUrls": null,
+            "signature": null
+          },
+          "dynamicFields": []
+        },
+        "last_outgoing_data_error": null,
+        "simple_response": 1
+      }
+    }
+  ]
+}
