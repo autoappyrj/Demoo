@@ -4,7 +4,7 @@ A minimal dummy Node.js project added for demonstration and testing.
 
 Files included:
 - `index.js` — simple entrypoint and exported helper
-- `package.json` — minimal metadata and scripts
+- `package.json` — minimal xsnx asm dmetadata and scripts
 - `.gitignore` — common ignores
 git checkout -b add-dummy-project
 mkdir -p dummy-project
