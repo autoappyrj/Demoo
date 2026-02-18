@@ -7,6 +7,6 @@
     "start": "node index.js",
     "test": "node -e \"console.log('No tests');\""
   },
-  "author": "autoappyrj",
+  "author": "autoappyrj",dc md mc
   "license": "MIT"
 }
