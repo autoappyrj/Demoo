@@ -7,7 +7,7 @@
     {
       "temp_id": "temp_task_1",
       "parent_temp_id": null,
-      "task_template_id": "e0e8b8b5-44d8-46f2-a94b-b3d68729b394",
+      "task_template_id": "e0e8b8b5-44d8-46f2-d68729b394",
       "action_template_id": "f0f8041a-d83e-41a6-a996-0a4504ccd33a",
       "task_type": "google-sheets",
       "action_type": "new_row_added_or_updated",
